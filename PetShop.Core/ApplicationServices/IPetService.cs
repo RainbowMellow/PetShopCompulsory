@@ -8,5 +8,8 @@ namespace PetShop.Core.ApplicationServices
     public interface IPetService
     {
         public List<Pet> GetPets();
+        public string[] GetMenuItems();
+        public List<Pet> GetFiveCheapestPets();
+        public Pet CreatePet(Pet inputPet);
     }
 }

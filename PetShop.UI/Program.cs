@@ -20,8 +20,7 @@ namespace PetShop.UI
             var serviceProvider = serviceCollection.BuildServiceProvider();
             var petService = serviceProvider.GetRequiredService<IPetService>();
             var printer = new Printer(petService);
-            Console.WriteLine("Welcome! \nHere is a list of the pets!");
-            printer.GetPets();
+            printer.ShowMenu();
 
             Console.ReadLine();
         }

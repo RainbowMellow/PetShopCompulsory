@@ -13,6 +13,22 @@ namespace PetShop.Core.ApplicationServices.Impl
         {
             _petRepository = petRepository;
         }
+
+        public Pet CreatePet(Pet inputPet)
+        {
+            return _petRepository.CreatePet(inputPet);
+        }
+
+        public List<Pet> GetFiveCheapestPets()
+        {
+            return _petRepository.GetFiveCheapestPets();
+        }
+
+        public string[] GetMenuItems()
+        {
+            return _petRepository.GetMenuItems();
+        }
+
         public List<Pet> GetPets()
         {
             return (List<Pet>)_petRepository.ReadPets();

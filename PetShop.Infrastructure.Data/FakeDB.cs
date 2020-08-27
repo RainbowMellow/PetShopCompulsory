@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace PetShop.Infrastructure.Data
@@ -9,6 +11,49 @@ namespace PetShop.Infrastructure.Data
     public static class FakeDB
     {
         public static IEnumerable<Pet> Pets;
+        
+
+        private static string[] Options = {
+
+                "Exit",    
+                "Show And Sort List Of All Pets",
+                "Search Pets By Type",
+                "Create A Pet",
+                "Delete A Pet",
+                "Update A Pet",
+                "Get 5 Cheapest Available Pets"
+            };
+
+        internal static Pet CreatePet(Pet inputPet)
+        {
+            List<Pet> petList = Pets.ToList(); 
+            
+            int _id = petList.Count + 1;
+
+            Pet createdPet = new Pet { 
+
+                ID = _id++,
+                Name = inputPet.Name,
+                Type = inputPet.Type,
+                BirthDate = inputPet.BirthDate,
+                SoldDate = inputPet.SoldDate,
+                Color = inputPet.Color,
+                PreviousOwner = inputPet.PreviousOwner,
+                Price = inputPet.Price
+
+                };
+
+            petList.Add(createdPet);
+            Pets = petList;
+
+            return createdPet;
+        }
+
+        internal static List<Pet> GetFiveCheapestPets()
+        {
+            List<Pet> cheapestPets = Pets.OrderBy(Pet => Pet.Price).Take(5).ToList();
+            return cheapestPets;
+        }
 
         public static void InitData()
         {
@@ -38,6 +83,11 @@ namespace PetShop.Infrastructure.Data
             };
 
             Pets = petList;
+        }
+
+        internal static string[] GetMenuItems()
+        {
+            return Options;
         }
 
         public static IEnumerable<Pet> GetPetList()
