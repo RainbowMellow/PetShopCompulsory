@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace PetShop.Core.Validators.Impl
 {
@@ -24,17 +25,16 @@ namespace PetShop.Core.Validators.Impl
 
         public Boolean CheckIfLetters(string input, string type)
         {
-            Char[] array = input.ToCharArray();
-            foreach (Char letter in array)
+            if (Regex.IsMatch(input, @"^[A-Za-z\s]*$"))
             {
-                if (!Char.IsLetter(letter))
-                {
-                    Console.WriteLine($"\nPlease input a {type} without special characters or numbers.");
-                    return false;
-                }
-
+                return true;
             }
-            return true;
+            else
+            {
+                Console.WriteLine($"\nPlease input a {type} without special characters or numbers.");
+                return false;
+            }
+
         }
 
         public DateTime? CheckIfDate(string input)
