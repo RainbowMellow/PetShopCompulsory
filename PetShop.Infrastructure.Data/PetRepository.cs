@@ -86,7 +86,13 @@ namespace PetShop.Infrastructure.Data
         public void UpdatePet(Pet pet)
         {
             Pet chosenPet = FakeDB.Pets.Find(Pet => Pet.ID == pet.ID);
-            chosenPet = pet;
+            chosenPet.Name = pet.Name;
+            chosenPet.Type = pet.Type;
+            chosenPet.BirthDate = pet.BirthDate;
+            chosenPet.Color = pet.Color;
+            chosenPet.SoldDate = pet.SoldDate;
+            chosenPet.PreviousOwner = pet.PreviousOwner;
+            chosenPet.Price = pet.Price;
         }
     }
 }

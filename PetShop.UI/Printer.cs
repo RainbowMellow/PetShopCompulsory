@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 using PetShop.Core.ApplicationServices;
+using PetShop.Core.ApplicationServices.Impl;
 using PetShop.Core.Entities;
 using PetShop.Core.Validators;
 using PetShop.Core.Validators.Impl;
@@ -14,11 +15,13 @@ namespace PetShop.UI
     {
         private IPetService _petService;
         private IInputValidators _inputValidators;
+        private IOwnerService _ownerService;
 
-        public Printer(IPetService petService)
+        public Printer(IPetService petService, IInputValidators inputValidators, IOwnerService ownerService)
         {
             _petService = petService;
-            _inputValidators = new InputValidators();
+            _inputValidators = inputValidators;
+            _ownerService = ownerService;
 
         }
 
@@ -599,8 +602,55 @@ namespace PetShop.UI
                     break;
             }
         }
-#endregion
+        #endregion
 
+        #region Owner menu
+        public void ShowOwnerMenu()
+        {
+            string[] ownerOptions = _ownerService.GetOwnerMenuItems();
+            Console.Clear();
+            Console.WriteLine("Hello! Welcome to the owner menu! ");
+            Console.WriteLine("Please choose an option: \n");
+
+            //Inputs the numbers in front of the options.
+            for (int i = 0; i < ownerOptions.Length; i++)
+            {
+                Console.WriteLine($"{i}: {ownerOptions.GetValue(i)}");
+            }
+
+            Console.WriteLine("\nInput:");
+
+            //Uses the validator to check if the input is an int, and between 0 and the length of the option list.
+            int selection = _inputValidators.CheckMenuInput(ownerOptions.Length);
+
+            switch (selection)
+            {
+                case 0:
+                    Environment.Exit(0);
+                    break;
+                case 1:
+                    GetPets();
+                    break;
+                case 2:
+                    SearchByType();
+                    break;
+                case 3:
+                    CreatePet();
+                    break;
+                case 4:
+                    DeletePet();
+                    break;
+                case 5:
+                    UpdatePet();
+                    break;
+                case 6:
+                    GetCheapestPets();
+                    break;
+
+            }
+        }
+
+        #endregion
 
 
         private void BackToMenu()
