@@ -55,7 +55,7 @@ namespace PetShop.Infrastructure.Data
 
             Owner secondOwner = new Owner
             {
-                ID = 1,
+                ID = 2,
                 FirstName = "Mark",
                 LastName = "Hansen",
                 Address = "Septembervej 24, 6700 Esbjerg",

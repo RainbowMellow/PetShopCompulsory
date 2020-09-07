@@ -10,7 +10,7 @@ namespace PetShop.Infrastructure.Data
     {
         public string[] GetOwnerMenuItems()
         {
-            return null;
+            return FakeDB.OwnerMenuOptions;
         }
 
         public Owner CreateOwner(Owner inputOwner)
