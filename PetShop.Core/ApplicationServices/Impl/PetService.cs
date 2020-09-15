@@ -44,7 +44,7 @@ namespace PetShop.Core.ApplicationServices.Impl
 
         public List<Pet> GetPets()
         {
-            return (List<Pet>)_petRepository.ReadPets();
+            return _petRepository.ReadPets();
         }
 
         public List<Pet> GetPetsHToL()

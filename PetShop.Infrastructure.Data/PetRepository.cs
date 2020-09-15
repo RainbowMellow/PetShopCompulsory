@@ -80,7 +80,7 @@ namespace PetShop.Infrastructure.Data
 
         public List<Pet> ReadPets()
         {
-            return FakeDB.Pets;
+            return FakeDB.Pets.ToList();
         }
 
         public void UpdatePet(Pet pet)

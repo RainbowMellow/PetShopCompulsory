@@ -8,7 +8,7 @@ using System.Text;
 
 namespace PetShop.Infrastructure.Data
 {
-    public static class FakeDB
+    public class FakeDB
     {
         public static List<Pet> Pets;
         public static List<Owner> Owners;
@@ -70,8 +70,8 @@ namespace PetShop.Infrastructure.Data
                 ID = 1,
                 Name = "Paul",
                 Type = PetType.Dog,
-                BirthDate = Convert.ToDateTime("31/1/1999"),
-                SoldDate = Convert.ToDateTime("31/1/2002"),
+                BirthDate = Convert.ToDateTime("31/1/1999", new CultureInfo("da-DK")),
+                SoldDate = Convert.ToDateTime("31/1/2002", new CultureInfo("da-DK")),
                 Color = "Red",
                 PreviousOwner = firstOwner,
                 Price = 2000
@@ -82,8 +82,8 @@ namespace PetShop.Infrastructure.Data
                 ID = 2,
                 Name = "Rebecca",
                 Type = PetType.Cat,
-                BirthDate = Convert.ToDateTime("21/3/2000"),
-                SoldDate = Convert.ToDateTime("31/12/2000"),
+                BirthDate = Convert.ToDateTime("21/3/2000", new CultureInfo("da-DK")),
+                SoldDate = Convert.ToDateTime("31/12/2000", new CultureInfo("da-DK")),
                 Color = "Orange",
                 PreviousOwner = secondOwner,
                 Price = 3500
