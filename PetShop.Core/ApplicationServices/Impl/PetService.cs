@@ -17,7 +17,7 @@ namespace PetShop.Core.ApplicationServices.Impl
             return _petRepository.CreatePet(inputPet);
         }
 
-        public void DeletePet(int id)
+        public Pet DeletePet(int id)
         {
             _petRepository.DeletePet(id);
         }
@@ -57,9 +57,9 @@ namespace PetShop.Core.ApplicationServices.Impl
             return _petRepository.GetPetsLToH();
         }
 
-        public void UpdatePet(Pet pet)
+        public Pet UpdatePet(Pet pet)
         {
-            _petRepository.UpdatePet(pet);
+            return _petRepository.UpdatePet(pet);
         }
     }
 }

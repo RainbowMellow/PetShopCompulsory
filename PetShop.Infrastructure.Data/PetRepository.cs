@@ -37,7 +37,7 @@ namespace PetShop.Infrastructure.Data
             return createdPet;
         }
 
-        public void DeletePet(int id)
+        public Pet DeletePet(int id)
         {
             Pet pet = FakeDB.Pets.Find(Pet => Pet.ID == id);
             FakeDB.Pets.Remove(pet);
@@ -57,7 +57,14 @@ namespace PetShop.Infrastructure.Data
         public Pet GetPet(int id)
         {
             Pet pet = FakeDB.Pets.Find(Pet => Pet.ID == id);
-            return pet;
+            if (pet == null)
+            {
+                throw new NullReferenceException();
+            }
+            else
+            {
+                return pet;
+            }
         }
 
         public List<Pet> GetPetByType(PetType petType)
@@ -83,16 +90,26 @@ namespace PetShop.Infrastructure.Data
             return FakeDB.Pets.ToList();
         }
 
-        public void UpdatePet(Pet pet)
+        public Pet UpdatePet(Pet pet)
         {
             Pet chosenPet = FakeDB.Pets.Find(Pet => Pet.ID == pet.ID);
-            chosenPet.Name = pet.Name;
-            chosenPet.Type = pet.Type;
-            chosenPet.BirthDate = pet.BirthDate;
-            chosenPet.Color = pet.Color;
-            chosenPet.SoldDate = pet.SoldDate;
-            chosenPet.PreviousOwner = pet.PreviousOwner;
-            chosenPet.Price = pet.Price;
+
+            if (chosenPet == null)
+            {
+                throw new NullReferenceException();
+            }
+            else
+            {
+                chosenPet.Name = pet.Name;
+                chosenPet.Type = pet.Type;
+                chosenPet.BirthDate = pet.BirthDate;
+                chosenPet.Color = pet.Color;
+                chosenPet.SoldDate = pet.SoldDate;
+                chosenPet.PreviousOwner = pet.PreviousOwner;
+                chosenPet.Price = pet.Price;
+
+                return chosenPet;
+            }
         }
     }
 }

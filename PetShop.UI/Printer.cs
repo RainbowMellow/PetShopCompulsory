@@ -321,7 +321,7 @@ namespace PetShop.UI
                         _petService.DeletePet(validatedId);
                         Console.WriteLine("\nThe pet was deleted!");
                     }
-                    catch (Exception ex)
+                    catch 
                     {
                         Console.WriteLine("\nThe pet could not be deleted!");
                     }
@@ -455,7 +455,7 @@ namespace PetShop.UI
                 BackToMenu();
             }
 
-            catch (Exception ex)
+            catch 
             {
                 Console.WriteLine("\n----------------------------------------" +
                         "\nPet Creation Failed!");

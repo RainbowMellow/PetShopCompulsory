@@ -29,12 +29,14 @@ namespace PetShopApp.WebApi.Controllers
         {
             try
             {
+                Response.StatusCode = 200;
                 return _petService.GetPets();
             }
             catch(Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
+
         }
 
         // GET api/<PetsController>/5
@@ -43,13 +45,18 @@ namespace PetShopApp.WebApi.Controllers
         {
             try
             {
+                Response.StatusCode = 200;
                 return _petService.GetPet(id);
             }
-            catch(Exception ex)
+            catch (NullReferenceException)
             {
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = 500;
                 return StatusCode(500, ex.Message);
             }
-            
         }
 
 
@@ -60,28 +67,33 @@ namespace PetShopApp.WebApi.Controllers
             try
             {
                 Pet createdPet = _petService.CreatePet(pet);
-                return StatusCode(201, "Pet was created");
+                Response.StatusCode = 201;
+                return createdPet;
                 
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
-                
             }
             
         }
 
         // PUT api/<PetsController>/5
         [HttpPut("{id}")]
-        public ActionResult<string> Put(int id, [FromBody] Pet pet)
+        public ActionResult<Pet> Put(int id, [FromBody] Pet pet)
         {
             try
             {
                 pet.ID = id;
-                _petService.UpdatePet(pet);
-                return StatusCode(200, "Pet was updated!");
+                Pet updatedPet = _petService.UpdatePet(pet);
+                Response.StatusCode = 202;
+                return updatedPet;
             }
-            catch(Exception ex)
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
                
@@ -90,14 +102,19 @@ namespace PetShopApp.WebApi.Controllers
 
         // DELETE api/<PetsController>/5
         [HttpDelete("{id}")]
-        public ActionResult<string> Delete(int id)
+        public ActionResult<Pet> Delete(int id)
         {
             try
             {
-                _petService.DeletePet(id);
-                return StatusCode(200, "Pet was deleted!");
+                Pet deletedPet = _petService.DeletePet(id);
+                Response.StatusCode = 202;
+                return deletedPet;
             }
-            catch(Exception ex)
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
