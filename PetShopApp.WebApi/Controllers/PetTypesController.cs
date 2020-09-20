@@ -128,6 +128,10 @@ namespace PetShopApp.WebApi.Controllers
             {
                 return NotFound();
             }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);

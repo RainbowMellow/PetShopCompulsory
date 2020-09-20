@@ -59,7 +59,19 @@ namespace PetShop.Core.ApplicationServices.Impl
 
         public Owner UpdateOwner(Owner inputOwner)
         {
-            return _ownerRepository.UpdateOwner(inputOwner);
+            if (_newInputValidators.CheckIfLetters(inputOwner.FirstName, "First Name")
+                && _newInputValidators.CheckIfLetters(inputOwner.LastName, "Last Name")
+                && _newInputValidators.CheckIfAddress(inputOwner.Address)
+                && _newInputValidators.CheckIfEmail(inputOwner.Email)
+                && _newInputValidators.CheckIfPhoneNumber(inputOwner.PhoneNumber))
+            {
+                return _ownerRepository.UpdateOwner(inputOwner);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+            
         }
 
         public List<Owner> GetOwnersWithParameters(string prop, string dir)

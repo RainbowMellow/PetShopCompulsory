@@ -61,7 +61,18 @@ namespace PetShop.Core.ApplicationServices.Impl
 
         public Pet UpdatePet(Pet pet)
         {
-            return _petRepository.UpdatePet(pet);
+            if (_newInputValidators.CheckIfLetters(pet.Name, "Name")
+                    && _newInputValidators.CheckIfType(pet.Type)
+                    && _newInputValidators.CheckIfLetters(pet.Color, "Color")
+                    && _newInputValidators.CheckIfNumberIsValid(pet.Price))
+            {
+                return _petRepository.UpdatePet(pet);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+            
         }
     }
 }

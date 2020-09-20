@@ -26,36 +26,6 @@ namespace PetShopApp.WebApi.Controllers
 
         }
 
-        //// GET: api/<PetsController>
-        //[HttpGet]
-        //public ActionResult<IEnumerable<Pet>> Get()
-        //{
-        //    try
-        //    {
-        //        Response.StatusCode = 200;
-        //        List<Pet> pets = _petService.GetPets();
-
-        //        if(pets.Count == 0)
-        //        {
-        //            throw new InvalidOperationException("The list of pets is empty.");
-        //        }
-        //        else
-        //        {
-        //            return pets;
-        //        }
-                
-        //    }
-        //    catch(InvalidOperationException ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-
-        //}
-
         // GET api/<PetsController>/5
         [HttpGet("{id}")]
         public ActionResult<Pet> Get(int id)
@@ -71,7 +41,6 @@ namespace PetShopApp.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                Response.StatusCode = 500;
                 return StatusCode(500, ex.Message);
             }
         }
@@ -162,6 +131,10 @@ namespace PetShopApp.WebApi.Controllers
             catch (NullReferenceException)
             {
                 return NotFound();
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(500, ex.Message);
             }
             catch (Exception ex)
             {

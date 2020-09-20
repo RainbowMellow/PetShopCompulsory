@@ -53,7 +53,15 @@ namespace PetShop.Core.ApplicationServices.Impl
 
         public PetType UpdatePetType(PetType petType)
         {
-            return _petTypeRepository.UpdatePetType(petType);
+            if (_newInputValidators.CheckIfLetters(petType.PetTypeName, "PetType Name"))
+            {
+                return _petTypeRepository.UpdatePetType(petType);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+            
         }
     }
 }

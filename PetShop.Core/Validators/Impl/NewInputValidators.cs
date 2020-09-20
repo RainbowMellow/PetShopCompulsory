@@ -1,4 +1,5 @@
-﻿using PetShop.Core.Entities;
+﻿using PetShop.Core.DomainServices;
+using PetShop.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,13 @@ namespace PetShop.Core.Validators.Impl
 {
     public class NewInputValidators : INewInputValidators
     {
+        private IPetTypeRepository _petTypesRepository;
+
+        public NewInputValidators(IPetTypeRepository petTypesRepository)
+        {
+            _petTypesRepository = petTypesRepository;
+        }
+
         public Boolean CheckIfLetters(string input, string type)
         {
             if (Regex.IsMatch(input, @"^[A-Za-z\s]*$"))
@@ -24,10 +32,12 @@ namespace PetShop.Core.Validators.Impl
 
         public Boolean CheckIfType(PetType input)
         {
-
-            if (Enum.IsDefined(typeof(PetType), input))
+            foreach (PetType petType in _petTypesRepository.GetPetTypes())
             {
-                return true;
+                if(petType.ID == input.ID && petType.PetTypeName.ToLower() == input.PetTypeName.ToLower())
+                {
+                    return true;
+                }
             }
 
             throw new ArgumentException("Type was not valid.");
