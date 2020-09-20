@@ -23,23 +23,45 @@ namespace PetShopApp.WebApi.Controllers
             _ownerService = ownerService;
         }
 
-        // GET: api/<OwnersController>
+        // GET: api/<PetsController>
         [HttpGet]
-        public ActionResult<IEnumerable<Owner>> Get()
+        public ActionResult<IEnumerable<Owner>> Get(string prop, string dir)
         {
             try
             {
                 Response.StatusCode = 200;
-                List<Owner> owners = _ownerService.GetOwners();
-                if (owners.Count == 0)
+
+                if (string.IsNullOrEmpty(prop) && string.IsNullOrEmpty(dir))
                 {
-                    throw new InvalidOperationException("The list of owners is empty.");
+                    List<Owner> owners = _ownerService.GetOwners();
+
+                    if (owners.Count == 0)
+                    {
+                        throw new InvalidOperationException("The list of Owners is empty.");
+                    }
+                    else
+                    {
+                        return owners;
+                    }
                 }
                 else
                 {
-                    return owners;
+                    List<Owner> ownersWithParam = _ownerService.GetOwnersWithParameters(prop, dir);
+
+                    if (ownersWithParam.Count == 0)
+                    {
+                        throw new InvalidOperationException("The list of Owners is empty.");
+                    }
+                    else
+                    {
+                        return ownersWithParam;
+                    }
                 }
 
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(500, ex.Message);
             }
             catch (InvalidOperationException ex)
             {
@@ -49,6 +71,7 @@ namespace PetShopApp.WebApi.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
+
         }
 
         // GET api/<OwnersController>/5

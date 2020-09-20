@@ -62,6 +62,9 @@ namespace PetShop.Core.ApplicationServices.Impl
             return _ownerRepository.UpdateOwner(inputOwner);
         }
 
-
+        public List<Owner> GetOwnersWithParameters(string prop, string dir)
+        {
+            return _ownerRepository.GetOwnersWithParameters(prop, dir);
+        }
     }
 }

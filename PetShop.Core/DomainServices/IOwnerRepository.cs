@@ -13,6 +13,6 @@ namespace PetShop.Core.DomainServices
         public Owner GetOwner(int id);
         public List<Owner> ReadOwners();
         public Owner UpdateOwner(Owner inputOwner);
-
+        public List<Owner> GetOwnersWithParameters(string prop, string dir);
     }
 }

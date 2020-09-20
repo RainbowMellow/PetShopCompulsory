@@ -2,6 +2,7 @@
 using PetShop.Core.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PetShop.Infrastructure.Data
@@ -87,6 +88,129 @@ namespace PetShop.Infrastructure.Data
 
             }
             
+        }
+
+        public List<Owner> GetOwnersWithParameters(string prop, string dir)
+        {
+            switch (prop.Trim().ToLower())
+            {
+                case "id":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Owners.OrderBy(Owner => Owner.ID).ToList();
+                            case "desc":
+                                return FakeDB.Owners.OrderByDescending(Owner => Owner.ID)
+                                                    .ToList();
+                            default:
+                                return FakeDB.Owners.OrderBy(Owner => Owner.ID).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Owners.OrderBy(Owner => Owner.ID).ToList();
+                    }
+
+                case "firstname":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Owners.OrderBy(Owner => Owner.FirstName).ToList();
+                            case "desc":
+                                return FakeDB.Owners.OrderByDescending(Owner => Owner.FirstName)
+                                                    .ToList();
+                            default:
+                                return FakeDB.Owners.OrderBy(Owner => Owner.FirstName).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Owners.OrderBy(Owner => Owner.FirstName).ToList();
+                    }
+
+                case "lastname":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Owners.OrderBy(Owner => Owner.LastName).ToList();
+                            case "desc":
+                                return FakeDB.Owners.OrderByDescending(Owner => Owner.LastName)
+                                                    .ToList();
+                            default:
+                                return FakeDB.Owners.OrderBy(Owner => Owner.LastName).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Owners.OrderBy(Owner => Owner.LastName).ToList();
+                    }
+
+                case "address":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Owners.OrderBy(Owner => Owner.Address).ToList();
+                            case "desc":
+                                return FakeDB.Owners.OrderByDescending(Owner => Owner.Address)
+                                                    .ToList();
+                            default:
+                                return FakeDB.Owners.OrderBy(Owner => Owner.Address).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Owners.OrderBy(Owner => Owner.Address).ToList();
+                    }
+
+                case "phonenumber":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Owners.OrderBy(Owner => Owner.PhoneNumber).ToList();
+                            case "desc":
+                                return FakeDB.Owners.OrderByDescending(Owner => Owner.PhoneNumber)
+                                                    .ToList();
+                            default:
+                                return FakeDB.Owners.OrderBy(Owner => Owner.PhoneNumber).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Owners.OrderBy(Owner => Owner.PhoneNumber).ToList();
+                    }
+
+                case "email":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Owners.OrderBy(Owner => Owner.Email).ToList();
+                            case "desc":
+                                return FakeDB.Owners.OrderByDescending(Owner => Owner.Email)
+                                                    .ToList();
+                            default:
+                                return FakeDB.Owners.OrderBy(Owner => Owner.Email).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Owners.OrderBy(Owner => Owner.Email).ToList();
+                    }
+
+                default:
+                    throw new ArgumentException("The parameters were not valid");
+            }
         }
     }
 }
