@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PetShop.Core.ApplicationServices;
 using PetShop.Core.Entities;
+using PetShop.Core.Validators;
+using PetShop.Core.Validators.Impl;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,7 +29,21 @@ namespace PetShopApp.WebApi.Controllers
         {
             try
             {
-                return _ownerService.GetOwners();
+                Response.StatusCode = 200;
+                List<Owner> owners = _ownerService.GetOwners();
+                if (owners.Count == 0)
+                {
+                    throw new InvalidOperationException("The list of owners is empty.");
+                }
+                else
+                {
+                    return owners;
+                }
+
+            }
+            catch (InvalidOperationException ex)
+            {
+                return StatusCode(500, ex.Message);
             }
             catch (Exception ex)
             {
@@ -41,7 +57,12 @@ namespace PetShopApp.WebApi.Controllers
         {
             try
             {
+                Response.StatusCode = 200;
                 return _ownerService.GetOwner(id);
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
             }
             catch (Exception ex)
             {
@@ -58,8 +79,13 @@ namespace PetShopApp.WebApi.Controllers
             try
             {
                 Owner createdOwner = _ownerService.CreateOwner(owner);
-                return StatusCode(201, "Owner was created");
+                Response.StatusCode = 201;
+                return createdOwner;
 
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(500, ex.Message);
             }
             catch (Exception ex)
             {
@@ -71,13 +97,18 @@ namespace PetShopApp.WebApi.Controllers
 
         // PUT api/<OwnersController>/5
         [HttpPut("{id}")]
-        public ActionResult<string> Put(int id, [FromBody] Owner owner)
+        public ActionResult<Owner> Put(int id, [FromBody] Owner owner)
         {
             try
             {
                 owner.ID = id;
-                _ownerService.UpdateOwner(owner);
-                return StatusCode(200, "Owner was updated!");
+                Owner updatedOwner = _ownerService.UpdateOwner(owner);
+                Response.StatusCode = 202;
+                return updatedOwner;
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
             }
             catch (Exception ex)
             {
@@ -88,12 +119,17 @@ namespace PetShopApp.WebApi.Controllers
 
         // DELETE api/<OwnersController>/5
         [HttpDelete("{id}")]
-        public ActionResult<string> Delete(int id)
+        public ActionResult<Owner> Delete(int id)
         {
             try
             {
-                _ownerService.DeleteOwner(id);
-                return StatusCode(200, "Owner was deleted!");
+                Owner deletedOwner = _ownerService.DeleteOwner(id);
+                Response.StatusCode = 202;
+                return deletedOwner;
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
             }
             catch (Exception ex)
             {

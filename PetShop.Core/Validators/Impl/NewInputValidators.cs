@@ -45,6 +45,46 @@ namespace PetShop.Core.Validators.Impl
                 return true;
             }
         }
+
+        public bool CheckIfEmail(string input)
+        {
+            if (Regex.IsMatch(input, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
+                + "@"
+                + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"))
+            {
+                return true;
+            }
+            else
+            {
+                throw new FormatException("The E-mail was not valid.");
+            }
+
+        }
+
+        public bool CheckIfAddress(string input)
+        {
+            if (Regex.IsMatch(input, "^[a-zA-Z0-9, ]*$"))
+            {
+                return true;
+            }
+            else
+            {
+                throw new FormatException("The Address was not valid.");
+            }
+        }
+
+        public bool CheckIfPhoneNumber(string input)
+        {
+            if (Regex.IsMatch(input, @"^\d{8}$"))
+            {
+                return true;
+            }
+            else
+            {
+                throw new FormatException("The PhoneNumber was not valid.");
+            }
+
+        }
     }
 }
 

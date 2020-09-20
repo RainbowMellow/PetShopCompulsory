@@ -1,5 +1,7 @@
 ﻿using PetShop.Core.DomainServices;
 using PetShop.Core.Entities;
+using PetShop.Core.Validators;
+using System;
 using System.Collections.Generic;
 
 namespace PetShop.Core.ApplicationServices.Impl
@@ -7,16 +9,28 @@ namespace PetShop.Core.ApplicationServices.Impl
     public class PetService : IPetService
     {
         private IPetRepository _petRepository;
-        public PetService(IPetRepository petRepository)
+        private INewInputValidators _newInputValidators;
+        public PetService(IPetRepository petRepository, INewInputValidators newInputValidators)
         {
             _petRepository = petRepository;
+
+            _newInputValidators = newInputValidators;
         }
 
         public Pet CreatePet(Pet inputPet)
         {
-
-
-            return _petRepository.CreatePet(inputPet);
+            if (_newInputValidators.CheckIfLetters(inputPet.Name, "Name")
+                    && _newInputValidators.CheckIfType(inputPet.Type)
+                    && _newInputValidators.CheckIfLetters(inputPet.Color, "Color")
+                    && _newInputValidators.CheckIfNumberIsValid(inputPet.Price))
+            {
+                return _petRepository.CreatePet(inputPet);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+            
         }
 
         public Pet DeletePet(int id)

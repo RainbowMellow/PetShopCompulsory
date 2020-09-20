@@ -34,16 +34,32 @@ namespace PetShop.Infrastructure.Data
             return createdOwner;
         }
 
-        public void DeleteOwner(int id)
+        public Owner DeleteOwner(int id)
         {
             Owner owner = FakeDB.Owners.Find(Owner => Owner.ID == id);
-            FakeDB.Owners.Remove(owner);
+            if (owner == null)
+            {
+                throw new NullReferenceException();
+            }
+            else
+            {
+                FakeDB.Owners.Remove(owner);
+                return owner;
+
+            }
         }
 
         public Owner GetOwner(int id)
         {
             Owner owner = FakeDB.Owners.Find(Owner => Owner.ID == id);
-            return owner;
+            if (owner == null)
+            {
+                throw new NullReferenceException();
+            }
+            else
+            {
+                return owner;
+            }
         }
 
         public List<Owner> ReadOwners()
@@ -51,14 +67,26 @@ namespace PetShop.Infrastructure.Data
             return FakeDB.Owners;
         }
 
-        public void UpdateOwner(Owner inputOwner)
+        public Owner UpdateOwner(Owner inputOwner)
         {
             Owner chosenOwner = FakeDB.Owners.Find(Owner => Owner.ID == inputOwner.ID);
-            chosenOwner.FirstName = inputOwner.FirstName;
-            chosenOwner.LastName = inputOwner.LastName;
-            chosenOwner.Address = inputOwner.Address;
-            chosenOwner.PhoneNumber = inputOwner.PhoneNumber;
-            chosenOwner.Email = inputOwner.Email;
+           
+            if (chosenOwner == null)
+            {
+                throw new NullReferenceException();
+            }
+            else
+            {
+                chosenOwner.FirstName = inputOwner.FirstName;
+                chosenOwner.LastName = inputOwner.LastName;
+                chosenOwner.Address = inputOwner.Address;
+                chosenOwner.PhoneNumber = inputOwner.PhoneNumber;
+                chosenOwner.Email = inputOwner.Email;
+
+                return chosenOwner;
+
+            }
+            
         }
     }
 }

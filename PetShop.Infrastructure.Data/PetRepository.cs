@@ -40,8 +40,17 @@ namespace PetShop.Infrastructure.Data
         public Pet DeletePet(int id)
         {
             Pet pet = FakeDB.Pets.Find(Pet => Pet.ID == id);
-            FakeDB.Pets.Remove(pet);
-            return pet;
+            if (pet == null)
+            {
+                throw new NullReferenceException();
+            }
+            else
+            {
+                FakeDB.Pets.Remove(pet);
+                return pet;
+
+            }
+            
         }
 
         public List<Pet> GetFiveCheapestPets()

@@ -18,13 +18,11 @@ namespace PetShopApp.WebApi.Controllers
     [ApiController]
     public class PetsController : ControllerBase
     {
-        private INewInputValidators _newInputValidators;
         private readonly IPetService _petService;
 
-        public PetsController(IPetService petService, INewInputValidators newInputValidators)
+        public PetsController(IPetService petService)
         {
             _petService = petService;
-            _newInputValidators = newInputValidators;
 
         }
 
@@ -35,7 +33,21 @@ namespace PetShopApp.WebApi.Controllers
             try
             {
                 Response.StatusCode = 200;
-                return _petService.GetPets();
+                List<Pet> pets = _petService.GetPets();
+
+                if(pets.Count == 0)
+                {
+                    throw new InvalidOperationException("The list of pets is empty.");
+                }
+                else
+                {
+                    return pets;
+                }
+                
+            }
+            catch(InvalidOperationException ex)
+            {
+                return StatusCode(500, ex.Message);
             }
             catch(Exception ex)
             {
@@ -71,19 +83,9 @@ namespace PetShopApp.WebApi.Controllers
         {
             try
             {
-                if(_newInputValidators.CheckIfLetters(pet.Name, "Name") 
-                    && _newInputValidators.CheckIfType(pet.Type) 
-                    && _newInputValidators.CheckIfLetters(pet.Color, "Color") 
-                    && _newInputValidators.CheckIfNumberIsValid(pet.Price))
-                {
-                    Pet createdPet = _petService.CreatePet(pet);
-                    Response.StatusCode = 201;
-                    return createdPet;
-                }
-                else
-                {
-                    return StatusCode(500, "Something went wrong");
-                }
+                Pet createdPet = _petService.CreatePet(pet);
+                Response.StatusCode = 201;
+                return createdPet;
             }
             catch (ArgumentException ex)
             {

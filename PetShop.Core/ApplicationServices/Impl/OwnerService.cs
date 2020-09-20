@@ -1,7 +1,9 @@
 ﻿using PetShop.Core.DomainServices;
 using PetShop.Core.Entities;
+using PetShop.Core.Validators;
 using System;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using System.Text;
 
 namespace PetShop.Core.ApplicationServices.Impl
@@ -9,11 +11,14 @@ namespace PetShop.Core.ApplicationServices.Impl
     public class OwnerService : IOwnerService
     {
         private IOwnerRepository _ownerRepository;
+        private INewInputValidators _newInputValidators;
 
-        public OwnerService(IOwnerRepository ownerRepository)
+        public OwnerService(IOwnerRepository ownerRepository, INewInputValidators newInputValidators)
         {
             _ownerRepository = ownerRepository;
+            _newInputValidators = newInputValidators;
         }
+        
 
         public string[] GetOwnerMenuItems()
         {
@@ -22,12 +27,24 @@ namespace PetShop.Core.ApplicationServices.Impl
 
         public Owner CreateOwner(Owner inputOwner)
         {
-            return _ownerRepository.CreateOwner(inputOwner);
+            if(_newInputValidators.CheckIfLetters(inputOwner.FirstName, "First Name") 
+                && _newInputValidators.CheckIfLetters(inputOwner.LastName, "Last Name") 
+                && _newInputValidators.CheckIfAddress(inputOwner.Address) 
+                && _newInputValidators.CheckIfEmail(inputOwner.Email) 
+                && _newInputValidators.CheckIfPhoneNumber(inputOwner.PhoneNumber))
+            {
+                return _ownerRepository.CreateOwner(inputOwner);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+            
         }
 
-        public void DeleteOwner(int id)
+        public Owner DeleteOwner(int id)
         {
-            _ownerRepository.DeleteOwner(id);
+            return _ownerRepository.DeleteOwner(id);
         }
 
         public Owner GetOwner(int id)
@@ -40,9 +57,9 @@ namespace PetShop.Core.ApplicationServices.Impl
             return _ownerRepository.ReadOwners();
         }
 
-        public void UpdateOwner(Owner inputOwner)
+        public Owner UpdateOwner(Owner inputOwner)
         {
-            _ownerRepository.UpdateOwner(inputOwner);
+            return _ownerRepository.UpdateOwner(inputOwner);
         }
 
 

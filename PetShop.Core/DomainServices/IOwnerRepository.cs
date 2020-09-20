@@ -9,10 +9,10 @@ namespace PetShop.Core.DomainServices
     {
         public string[] GetOwnerMenuItems();
         public Owner CreateOwner(Owner inputOwner);
-        public void DeleteOwner(int id);
+        public Owner DeleteOwner(int id);
         public Owner GetOwner(int id);
         public List<Owner> ReadOwners();
-        public void UpdateOwner(Owner inputOwner);
+        public Owner UpdateOwner(Owner inputOwner);
 
     }
 }
