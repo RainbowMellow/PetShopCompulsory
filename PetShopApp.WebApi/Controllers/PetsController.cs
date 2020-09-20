@@ -26,35 +26,35 @@ namespace PetShopApp.WebApi.Controllers
 
         }
 
-        // GET: api/<PetsController>
-        [HttpGet]
-        public ActionResult<IEnumerable<Pet>> Get()
-        {
-            try
-            {
-                Response.StatusCode = 200;
-                List<Pet> pets = _petService.GetPets();
+        //// GET: api/<PetsController>
+        //[HttpGet]
+        //public ActionResult<IEnumerable<Pet>> Get()
+        //{
+        //    try
+        //    {
+        //        Response.StatusCode = 200;
+        //        List<Pet> pets = _petService.GetPets();
 
-                if(pets.Count == 0)
-                {
-                    throw new InvalidOperationException("The list of pets is empty.");
-                }
-                else
-                {
-                    return pets;
-                }
+        //        if(pets.Count == 0)
+        //        {
+        //            throw new InvalidOperationException("The list of pets is empty.");
+        //        }
+        //        else
+        //        {
+        //            return pets;
+        //        }
                 
-            }
-            catch(InvalidOperationException ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-            catch(Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
+        //    }
+        //    catch(InvalidOperationException ex)
+        //    {
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return StatusCode(500, ex.Message);
+        //    }
 
-        }
+        //}
 
         // GET api/<PetsController>/5
         [HttpGet("{id}")]
@@ -76,6 +76,56 @@ namespace PetShopApp.WebApi.Controllers
             }
         }
 
+        // GET: api/<PetsController>
+        [HttpGet]
+        public ActionResult<IEnumerable<Pet>> Get(string prop, string dir)
+        {
+            try
+            {
+                Response.StatusCode = 200;
+
+                if (string.IsNullOrEmpty(prop) && string.IsNullOrEmpty(dir))
+                {
+                    List<Pet> pets = _petService.GetPets();
+
+                    if (pets.Count == 0)
+                    {
+                        throw new InvalidOperationException("The list of pets is empty.");
+                    }
+                    else
+                    {
+                        return pets;
+                    }
+                }
+                else
+                {
+                    List<Pet> petsWithParam = _petService.GetPetsWithParameters(prop, dir);
+
+                    if (petsWithParam.Count == 0)
+                    {
+                        throw new InvalidOperationException("The list of pets is empty.");
+                    }
+                    else
+                    {
+                        return petsWithParam;
+                    }
+                }
+
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+        }
 
         // POST api/<PetsController>
         [HttpPost]

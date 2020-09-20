@@ -37,6 +37,8 @@ namespace PetShopApp.WebApi
             services.AddSingleton<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IOwnerService, OwnerService>();
             services.AddScoped<INewInputValidators, NewInputValidators>();
+            services.AddSingleton<IPetTypeRepository, PetTypeRepository>();
+            services.AddScoped<IPetTypeService, PetTypeService>();
 
             services.AddControllers().AddNewtonsoftJson(o =>
             {
@@ -59,7 +61,6 @@ namespace PetShopApp.WebApi
                 }
             //}
 
-            app.UseExceptionHandler("/error");
 
             app.UseHttpsRedirection();
 

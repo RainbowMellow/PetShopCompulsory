@@ -39,24 +39,10 @@ namespace PetShop.Infrastructure.Data
 
         public Pet DeletePet(int id)
         {
-            Pet pet = FakeDB.Pets.Find(Pet => Pet.ID == id);
-            if (pet == null)
-            {
-                throw new NullReferenceException();
-            }
-            else
-            {
-                FakeDB.Pets.Remove(pet);
-                return pet;
+            Pet pet = GetPet(id);
 
-            }
-            
-        }
-
-        public List<Pet> GetFiveCheapestPets()
-        {
-            List<Pet> cheapestPets = FakeDB.Pets.OrderBy(Pet => Pet.Price).Take(5).ToList();
-            return cheapestPets;
+            FakeDB.Pets.Remove(pet);
+            return pet;
         }
 
         public string[] GetMenuItems()
@@ -77,49 +63,187 @@ namespace PetShop.Infrastructure.Data
             }
         }
 
-        public List<Pet> GetPetByType(PetType petType)
+        public List<Pet> GetPetsWithParameters(string prop, string dir)
         {
-            List<Pet> petListByType = FakeDB.Pets.FindAll(Pet => Pet.Type == petType);
-            return petListByType;
+            switch (prop.Trim().ToLower())
+            {
+                case "id":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Pets.OrderBy(Pet => Pet.ID).ToList();
+                            case "desc":
+                                return FakeDB.Pets.OrderByDescending(Pet => Pet.ID)
+                                                    .ToList();
+                            default:
+                                return FakeDB.Pets.OrderBy(Pet => Pet.ID).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Pets.OrderBy(Pet => Pet.ID).ToList();
+                    }
+
+                case "name":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Pets.OrderBy(Pet => Pet.Name).ToList();
+                            case "desc":
+                                return FakeDB.Pets.OrderByDescending(Pet => Pet.Name)
+                                                .ToList();
+                            default:
+                                return FakeDB.Pets.OrderBy(Pet => Pet.Name).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Pets.OrderBy(Pet => Pet.Name).ToList();
+                    }
+
+                case "type":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Pets.OrderBy(Pet => Pet.Type.PetTypeName).ToList();
+                            case "desc":
+                                return FakeDB.Pets.OrderByDescending(Pet => Pet.Type.PetTypeName)
+                                                    .ToList();
+                            default:
+                                return FakeDB.Pets.OrderBy(Pet => Pet.Type.PetTypeName).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Pets.OrderBy(Pet => Pet.Type.PetTypeName).ToList();
+                    }
+
+                case "birthdate":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Pets.OrderBy(Pet => Pet.BirthDate).ToList();
+                            case "desc":
+                                return FakeDB.Pets.OrderByDescending(Pet => Pet.BirthDate)
+                                                    .ToList();
+                            default:
+                                return FakeDB.Pets.OrderBy(Pet => Pet.BirthDate).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Pets.OrderBy(Pet => Pet.BirthDate).ToList();
+                    }
+
+                case "solddate":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Pets.OrderBy(Pet => Pet.SoldDate).ToList();
+                            case "desc":
+                                return FakeDB.Pets.OrderByDescending(Pet => Pet.SoldDate)
+                                                    .ToList();
+                            default:
+                                return FakeDB.Pets.OrderBy(Pet => Pet.SoldDate).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Pets.OrderBy(Pet => Pet.SoldDate).ToList();
+                    }
+
+                case "color":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Pets.OrderBy(Pet => Pet.Color).ToList();
+                            case "desc":
+                                return FakeDB.Pets.OrderByDescending(Pet => Pet.Color)
+                                                    .ToList();
+                            default:
+                                return FakeDB.Pets.OrderBy(Pet => Pet.Color).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Pets.OrderBy(Pet => Pet.Color).ToList();
+                    }
+
+                case "previousowner":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Pets.OrderBy(Pet => Pet.PreviousOwner.FirstName).ToList();
+                            case "desc":
+                                return FakeDB.Pets.OrderByDescending(Pet => Pet.PreviousOwner.FirstName)
+                                                    .ToList();
+                            default:
+                                return FakeDB.Pets.OrderBy(Pet => Pet.PreviousOwner.FirstName).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Pets.OrderBy(Pet => Pet.PreviousOwner).ToList();
+                    }
+
+                case "price":
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        switch (dir.Trim().ToLower())
+                        {
+                            case "asc":
+                                return FakeDB.Pets.OrderBy(Pet => Pet.Price).ToList();
+                            case "desc":
+                                return FakeDB.Pets.OrderByDescending(Pet => Pet.Price)
+                                                    .ToList();
+                            default:
+                                return FakeDB.Pets.OrderBy(Pet => Pet.Price).ToList();
+                        }
+                    }
+                    else
+                    {
+                        return FakeDB.Pets.OrderBy(Pet => Pet.Price).ToList();
+                    }
+
+                default:
+                    throw new ArgumentException("The parameters were not valid");
+            }
         }
 
-        public List<Pet> GetPetsHToL()
-        {
-            List<Pet> petsHToL = FakeDB.Pets.OrderByDescending(Pet => Pet.Price).ToList();
-            return petsHToL;
-        }
-
-        public List<Pet> GetPetsLToH()
-        {
-            List<Pet> petsLToH = FakeDB.Pets.OrderBy(Pet => Pet.Price).ToList();
-            return petsLToH;
-        }
 
         public List<Pet> ReadPets()
         {
-            return FakeDB.Pets.ToList();
+            return FakeDB.Pets;
         }
 
         public Pet UpdatePet(Pet pet)
         {
-            Pet chosenPet = FakeDB.Pets.Find(Pet => Pet.ID == pet.ID);
+            Pet chosenPet = GetPet(pet.ID);
 
-            if (chosenPet == null)
-            {
-                throw new NullReferenceException();
-            }
-            else
-            {
-                chosenPet.Name = pet.Name;
-                chosenPet.Type = pet.Type;
-                chosenPet.BirthDate = pet.BirthDate;
-                chosenPet.Color = pet.Color;
-                chosenPet.SoldDate = pet.SoldDate;
-                chosenPet.PreviousOwner = pet.PreviousOwner;
-                chosenPet.Price = pet.Price;
+            chosenPet.Name = pet.Name;
+            chosenPet.Type = pet.Type;
+            chosenPet.BirthDate = pet.BirthDate;
+            chosenPet.Color = pet.Color;
+            chosenPet.SoldDate = pet.SoldDate;
+            chosenPet.PreviousOwner = pet.PreviousOwner;
+            chosenPet.Price = pet.Price;
 
-                return chosenPet;
-            }
+            return chosenPet;
+
         }
     }
 }

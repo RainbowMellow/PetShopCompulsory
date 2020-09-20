@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShop.UI", "PetShop.UI\PetShop.UI.csproj", "{5612F492-6E4F-404B-89B8-AF7EB78E222C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShop.Core", "PetShop.Core\PetShop.Core.csproj", "{C3E6551D-2459-47E4-B07E-B86E6915094B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShop.Core.Entities", "PetShop.Core.Entities\PetShop.Core.Entities.csproj", "{C98A6506-A1CC-41F0-97D3-357F0E4A24E7}"
@@ -13,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShop.Infrastructure.Data
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{7D1086DD-54B8-4754-8B30-B784F53077AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShopApp.WebApi", "PetShopApp.WebApi\PetShopApp.WebApi.csproj", "{F75F7C2E-9145-47BB-8B47-316ECEDEF0BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShopApp.WebApi", "PetShopApp.WebApi\PetShopApp.WebApi.csproj", "{F75F7C2E-9145-47BB-8B47-316ECEDEF0BA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{CB04DEBA-E1B4-41BA-A9D4-55041FEBF96A}"
 EndProject
@@ -25,10 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5612F492-6E4F-404B-89B8-AF7EB78E222C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5612F492-6E4F-404B-89B8-AF7EB78E222C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5612F492-6E4F-404B-89B8-AF7EB78E222C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5612F492-6E4F-404B-89B8-AF7EB78E222C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3E6551D-2459-47E4-B07E-B86E6915094B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3E6551D-2459-47E4-B07E-B86E6915094B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3E6551D-2459-47E4-B07E-B86E6915094B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -50,7 +44,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5612F492-6E4F-404B-89B8-AF7EB78E222C} = {7D1086DD-54B8-4754-8B30-B784F53077AF}
 		{C3E6551D-2459-47E4-B07E-B86E6915094B} = {F30EE9DD-6EEF-46FB-83DF-5B87C087A3A7}
 		{C98A6506-A1CC-41F0-97D3-357F0E4A24E7} = {F30EE9DD-6EEF-46FB-83DF-5B87C087A3A7}
 		{CB55A85E-0D8E-4689-AB68-A31BA6273CF2} = {CB04DEBA-E1B4-41BA-A9D4-55041FEBF96A}

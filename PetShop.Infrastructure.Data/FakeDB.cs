@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using PetType = PetShop.Core.Entities.PetType;
 
 namespace PetShop.Infrastructure.Data
 {
@@ -12,7 +13,7 @@ namespace PetShop.Infrastructure.Data
     {
         public static List<Pet> Pets;
         public static List<Owner> Owners;
-
+        public static List<PetType> PetTypes;
 
         public static string[] Options = {
 
@@ -42,6 +43,20 @@ namespace PetShop.Infrastructure.Data
         {
             Pets = new List<Pet>();
             Owners = new List<Owner>();
+            PetTypes = new List<PetType>();
+
+            PetType firstType = new Core.Entities.PetType
+            {
+                ID = 1,
+                PetTypeName = "Dog",
+            };
+            PetType secondType = new Core.Entities.PetType
+            {
+                ID = 2,
+                PetTypeName = "Cat",
+            };
+
+
 
             Owner firstOwner = new Owner
             {
@@ -69,7 +84,7 @@ namespace PetShop.Infrastructure.Data
             {
                 ID = 1,
                 Name = "Paul",
-                Type = PetType.Dog,
+                Type = firstType,
                 BirthDate = Convert.ToDateTime("31/1/1999", new CultureInfo("da-DK")),
                 SoldDate = Convert.ToDateTime("31/1/2002", new CultureInfo("da-DK")),
                 Color = "Red",
@@ -81,7 +96,7 @@ namespace PetShop.Infrastructure.Data
             {
                 ID = 2,
                 Name = "Rebecca",
-                Type = PetType.Cat,
+                Type = secondType,
                 BirthDate = Convert.ToDateTime("21/3/2000", new CultureInfo("da-DK")),
                 SoldDate = Convert.ToDateTime("31/12/2000", new CultureInfo("da-DK")),
                 Color = "Orange",
@@ -89,6 +104,8 @@ namespace PetShop.Infrastructure.Data
                 Price = 3500
             };
 
+            PetTypes.Add(firstType);
+            PetTypes.Add(secondType);
             Owners.Add(firstOwner);
             Owners.Add(secondOwner);
             Pets.Add(firstPet);

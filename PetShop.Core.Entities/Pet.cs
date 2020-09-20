@@ -7,7 +7,6 @@ using System.Text.Json.Serialization;
 
 namespace PetShop.Core.Entities
 {
-    public enum PetType {Dog, Cat, Goat, Mouse }
     public class Pet
     {
         public int ID { get; set; }

@@ -38,10 +38,6 @@ namespace PetShop.Core.ApplicationServices.Impl
             return _petRepository.DeletePet(id);
         }
 
-        public List<Pet> GetFiveCheapestPets()
-        {
-            return _petRepository.GetFiveCheapestPets();
-        }
 
         public string[] GetMenuItems()
         {
@@ -53,24 +49,14 @@ namespace PetShop.Core.ApplicationServices.Impl
             return _petRepository.GetPet(id);
         }
 
-        public List<Pet> GetPetByType(PetType petType)
-        {
-            return _petRepository.GetPetByType(petType);
-        }
-
         public List<Pet> GetPets()
         {
             return _petRepository.ReadPets();
         }
 
-        public List<Pet> GetPetsHToL()
+        public List<Pet> GetPetsWithParameters(string prop, string dir)
         {
-            return _petRepository.GetPetsHToL();
-        }
-
-        public List<Pet> GetPetsLToH()
-        {
-            return _petRepository.GetPetsLToH();
+            return _petRepository.GetPetsWithParameters(prop, dir);
         }
 
         public Pet UpdatePet(Pet pet)
