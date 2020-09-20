@@ -14,12 +14,14 @@ namespace PetShop.Core.ApplicationServices.Impl
 
         public Pet CreatePet(Pet inputPet)
         {
+
+
             return _petRepository.CreatePet(inputPet);
         }
 
         public Pet DeletePet(int id)
         {
-            _petRepository.DeletePet(id);
+            return _petRepository.DeletePet(id);
         }
 
         public List<Pet> GetFiveCheapestPets()

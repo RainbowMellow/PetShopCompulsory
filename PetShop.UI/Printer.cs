@@ -228,7 +228,7 @@ namespace PetShop.UI
                 animal.BirthDate = bd;
                 animal.SoldDate = sd;
                 animal.Color = color;
-                animal.PreviousOwner = previousOwner;
+                //animal.PreviousOwner = previousOwner;
                 animal.Price = petPrice;
 
                 _petService.UpdatePet(animal);
@@ -435,7 +435,7 @@ namespace PetShop.UI
                 inputPet.BirthDate = bd;
                 inputPet.SoldDate = sd;
                 inputPet.Color = color;
-                inputPet.PreviousOwner = previousOwner;
+                //inputPet.PreviousOwner = previousOwner;
                 inputPet.Price = petPrice;
 
                 Pet createdPet = _petService.CreatePet(inputPet);

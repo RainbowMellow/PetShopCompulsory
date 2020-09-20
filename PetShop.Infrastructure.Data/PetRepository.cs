@@ -41,6 +41,7 @@ namespace PetShop.Infrastructure.Data
         {
             Pet pet = FakeDB.Pets.Find(Pet => Pet.ID == id);
             FakeDB.Pets.Remove(pet);
+            return pet;
         }
 
         public List<Pet> GetFiveCheapestPets()

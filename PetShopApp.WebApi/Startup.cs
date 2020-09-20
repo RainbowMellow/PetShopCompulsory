@@ -14,6 +14,8 @@ using Newtonsoft.Json;
 using PetShop.Core.ApplicationServices;
 using PetShop.Core.ApplicationServices.Impl;
 using PetShop.Core.DomainServices;
+using PetShop.Core.Validators;
+using PetShop.Core.Validators.Impl;
 using PetShop.Infrastructure.Data;
 
 namespace PetShopApp.WebApi
@@ -34,12 +36,14 @@ namespace PetShopApp.WebApi
             services.AddScoped<IPetService, PetService>();
             services.AddSingleton<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IOwnerService, OwnerService>();
+            services.AddScoped<INewInputValidators, NewInputValidators>();
 
             services.AddControllers().AddNewtonsoftJson(o =>
             {
                 o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 o.SerializerSettings.MaxDepth = 5;
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +58,8 @@ namespace PetShopApp.WebApi
                     FakeDB.InitData();
                 }
             //}
+
+            app.UseExceptionHandler("/error");
 
             app.UseHttpsRedirection();
 

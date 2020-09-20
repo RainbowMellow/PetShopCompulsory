@@ -44,7 +44,7 @@ namespace PetShop.Core.Validators.Impl
                 DateTime dt = Convert.ToDateTime(input);
                 return dt;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Console.WriteLine("\nPlease input a valid date!");
                 return null;

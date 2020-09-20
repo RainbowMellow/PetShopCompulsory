@@ -3,26 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using PetShop.Core.ApplicationServices;
 using PetShop.Core.ApplicationServices.Impl;
 using PetShop.Core.Entities;
+using PetShop.Core.Validators;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PetShopApp.WebApi.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class PetsController : ControllerBase
     {
+        private INewInputValidators _newInputValidators;
         private readonly IPetService _petService;
 
-        public PetsController(IPetService petService)
+        public PetsController(IPetService petService, INewInputValidators newInputValidators)
         {
             _petService = petService;
+            _newInputValidators = newInputValidators;
+
         }
 
-        
         // GET: api/<PetsController>
         [HttpGet]
         public ActionResult<IEnumerable<Pet>> Get()
@@ -66,14 +71,27 @@ namespace PetShopApp.WebApi.Controllers
         {
             try
             {
-                Pet createdPet = _petService.CreatePet(pet);
-                Response.StatusCode = 201;
-                return createdPet;
-                
+                if(_newInputValidators.CheckIfLetters(pet.Name, "Name") 
+                    && _newInputValidators.CheckIfType(pet.Type) 
+                    && _newInputValidators.CheckIfLetters(pet.Color, "Color") 
+                    && _newInputValidators.CheckIfNumberIsValid(pet.Price))
+                {
+                    Pet createdPet = _petService.CreatePet(pet);
+                    Response.StatusCode = 201;
+                    return createdPet;
+                }
+                else
+                {
+                    return StatusCode(500, "Something went wrong");
+                }
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
                 return StatusCode(500, ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Something went wrong");
             }
             
         }
