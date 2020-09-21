@@ -17,6 +17,8 @@ namespace PetShop.Core.Validators
         public Boolean CheckIfEmail(string input);
         public Boolean CheckIfAddress(string input);
         public Boolean CheckIfPhoneNumber(string input);
+        public Boolean CheckIfValidDate(DateTime birthDate, DateTime soldDate);
+        public Boolean CheckIfOwner(Owner owner);
     }
 }
 

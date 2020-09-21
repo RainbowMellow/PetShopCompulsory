@@ -21,6 +21,8 @@ namespace PetShop.Core.ApplicationServices.Impl
         {
             if (_newInputValidators.CheckIfLetters(inputPet.Name, "Name")
                     && _newInputValidators.CheckIfType(inputPet.Type)
+                    && _newInputValidators.CheckIfValidDate(inputPet.BirthDate, inputPet.SoldDate)
+                    && _newInputValidators.CheckIfOwner(inputPet.PreviousOwner)
                     && _newInputValidators.CheckIfLetters(inputPet.Color, "Color")
                     && _newInputValidators.CheckIfNumberIsValid(inputPet.Price))
             {
@@ -63,6 +65,8 @@ namespace PetShop.Core.ApplicationServices.Impl
         {
             if (_newInputValidators.CheckIfLetters(pet.Name, "Name")
                     && _newInputValidators.CheckIfType(pet.Type)
+                    && _newInputValidators.CheckIfOwner(pet.PreviousOwner)
+                    && _newInputValidators.CheckIfValidDate(pet.BirthDate, pet.SoldDate)
                     && _newInputValidators.CheckIfLetters(pet.Color, "Color")
                     && _newInputValidators.CheckIfNumberIsValid(pet.Price))
             {
